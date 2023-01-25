@@ -1,11 +1,11 @@
 const express = require('express');
 const path = require('path');
-const socketio = require('socket.io');
+const {Server} = require('socket.io');
 const http = require('http');
 const helpers = require('./helpers')
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = new Server(server, {});
 const port = 3000;
 const data = {};
 
