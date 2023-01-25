@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const uuid = require('uuid')
 const {Server} = require('socket.io');
 const http = require('http');
 const helpers = require('./helpers')
@@ -9,6 +10,7 @@ const io = new Server(server, {});
 const port = 3000;
 const data = {};
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
@@ -21,6 +23,11 @@ io.on('connection', socket => {
             .emit('joined', user.name)
     });
 });
-app.get('rooms/:id', (res, req) => res.write(''));
+app.post('/login', (req, res) => {
+    const {username, email} = req.body;
+    console.log(username+email);
+    res.cookie('chatr_user', {username, email})
+    .redirect('/chat'); // TODO: handle incorrect password
+});
 
 server.listen(3000);
