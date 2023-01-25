@@ -1,0 +1,13 @@
+#chatbox {
+  background-color: dimgray;
+  margin: auto 10%;
+  width: 100%;
+  height: 80%;
+}
+
+.fullview {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+}

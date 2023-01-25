@@ -1,9 +1,11 @@
 const moment = require('moment');
-
-function newUser(id, name, room) {
-    users.push({id, name, room});
-    return {id, name, room};
-}
 const users = [];
-module.exports = {newUser}
-module.exports.format = (username, text) => ({username, text, time: moment().format('h:mm a')})
+
+function newUser(id, username, email, room = null) {
+    users.push({ id, username, email, room });
+    return { id, username, email, room };
+}
+
+function formatMessage(username, text) { username, text, time; moment().format('h:mm a'); }
+
+module.exports = { newUser, formatMessage };
