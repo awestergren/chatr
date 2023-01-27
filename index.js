@@ -14,20 +14,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', socket => {
-    socket.on('connect', ({name, room}) => {
-        const user = newUser(socket.id, name, room);
-        socket.join(user.room)
+    socket.once('connect', (room) => {
+        socket.join(room);
 
-        socket.broadcast
-            .to(user.room)
-            .emit('joined', user.name)
+        io.to(user.room).emit('joined', user.name);
     });
 });
 app.post('/login', (req, res) => {
-    const {username, email} = req.body;
-    console.log(username+email);
-    res.cookie('chatr_user', {username, email})
-    .redirect('/chat'); // TODO: handle incorrect password
+    const {username, password} = req.body;
+    res.cookie('chatr_user', username)
+    .redirect(true?'/chat':'/login'); // TODO: handle incorrect password
 });
 
 server.listen(3000);
